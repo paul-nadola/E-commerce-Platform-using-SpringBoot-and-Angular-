@@ -1,6 +1,7 @@
 package EcomercePlatformDemoApp.configuration;
 
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,6 +17,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
                                     HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
+
+        final String header = httpServletRequest.getHeader("Authorization");
+        String jwtToken = null;
+        if (header != null && header.startsWith("Bearer ")) {
+            header.substring(7); //len of Bearer plus the whitespace
+
+            try {
+
+            } catch (IllegalArgumentException e) {
+                System.out.println("Unable to get JWT token");
+            } catch (ExpiredJwtException e) {
+                System.out.println("Jwt token is expired");
+            }
+
+        }
+
 
     }
 }
