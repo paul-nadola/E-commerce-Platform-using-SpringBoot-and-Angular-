@@ -5,6 +5,7 @@ import EcomercePlatformDemoApp.dao.UserDao;
 import EcomercePlatformDemoApp.entity.Role;
 import EcomercePlatformDemoApp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,6 +18,10 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public User registerNewUser (User user){
         return userDao.save(user);
     }
@@ -35,7 +40,7 @@ public class UserService {
         adminUser.setUserFirstName("Paul");
         adminUser.setUserLastName("Nadola");
         adminUser.setUserName("nadola");
-        adminUser.setUserPassword("nadola");
+        adminUser.setUserPassword(getEcodedPassword("nadola"));
         Set<Role> adminRoles =  new HashSet<>();
         adminRoles.add(adminRole);
         adminUser.setRole(adminRoles);
@@ -45,10 +50,13 @@ public class UserService {
         user.setUserFirstName("Naddy");
         user.setUserLastName("Yings");
         user.setUserName("naddy");
-        user.setUserPassword("naddy");
+        user.setUserPassword(getEcodedPassword("naddy"));
         Set<Role> userRoles =  new HashSet<>();
         userRoles.add(userRole);
         user.setRole(userRoles);
         userDao.save(user);
+    }
+    public String getEcodedPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 }
