@@ -41,7 +41,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.cors();
         httpSecurity.csrf().disable()
                 //no need for authentication in the authenticate url
-                .authorizeRequests().antMatchers("/authenticate","/registerNewUser").permitAll()
+                .authorizeRequests().antMatchers("/authenticate","/registerNewUser","/addNewProduct").permitAll()
                 .antMatchers(HttpHeaders.ALLOW).permitAll()
                 .anyRequest().authenticated()
                 .and()
