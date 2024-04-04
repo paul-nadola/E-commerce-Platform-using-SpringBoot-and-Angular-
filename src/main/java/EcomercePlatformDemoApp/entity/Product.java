@@ -1,10 +1,8 @@
 package EcomercePlatformDemoApp.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -16,6 +14,15 @@ public class Product {
     private String productDescription;
     private Double productDiscountedPrice;
     private Double productActualPrice;
+    //USING A SET TO GET UNIQUE VALUES AND ALSO MULTIPLE IMAGES FOR ONE PRODUCT
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_images",
+            joinColumns = {
+            @joinColumn()
+            }
+    )
+    private Set<ImageModel> productImages;
 
     public Integer getProductId() {
         return productId;
