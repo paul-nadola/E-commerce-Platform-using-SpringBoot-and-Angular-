@@ -19,10 +19,21 @@ public class Product {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_images",
             joinColumns = {
-            @joinColumn()
+            @JoinColumn(name = "product_id")
+            },
+            inverseJoinColumns = {
+            @JoinColumn(name = "image_id")
             }
     )
     private Set<ImageModel> productImages;
+
+    public Set<ImageModel> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(Set<ImageModel> productImages) {
+        this.productImages = productImages;
+    }
 
     public Integer getProductId() {
         return productId;
